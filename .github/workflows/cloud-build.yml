@@ -34,6 +34,12 @@ jobs:
     # Setup gcloud CLI
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
+    
+    # Use gcloud CLI
+    - name: Use gcloud CLI
+      run:
+      - gcloud info
+      - gcloud auth list
 
     # Build and push image to Google Container Registry
     - name: Build
