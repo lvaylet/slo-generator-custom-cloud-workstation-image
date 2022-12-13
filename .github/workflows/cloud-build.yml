@@ -37,9 +37,7 @@ jobs:
     
     # Use gcloud CLI
     - name: Use gcloud CLI
-      run:
-      - gcloud info
-      - gcloud auth list
+      run: gcloud info; gcloud auth list
 
     # Build and push image to Google Container Registry
     - name: Build
