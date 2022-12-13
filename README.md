@@ -34,3 +34,8 @@ make all
 # Confirm SLO Generator can be called.
 slo-generator
 ```
+
+## References
+
+- [Cloud Build - GitHub Actions](https://github.com/google-github-actions/setup-gcloud/blob/main/example-workflows/cloud-build/README.md) for how to use Cloud Build from GitHub.
+- [Deploy GCP Resources with Terraform from GitHub with Keyless Authentication](https://github.com/lvaylet/terraform-in-action) for how to authenticate from GitHub without a Service Account JSON key.
