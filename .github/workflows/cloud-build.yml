@@ -1,47 +1,42 @@
-name: Build using Cloud Build
+name: Build image and push to Artifact Registry using Cloud Build
 
 on:
   push:
     branches:
-    - 'main'
-
-env:
-  PROJECT_ID: ${{ secrets.RUN_PROJECT }}
-  IMAGE_NAME: code-oss-for-slo-generator
+    - main
 
 jobs:
-  setup-build-deploy:
-    name: Setup, Build, and Deploy
+  cloud-build:
+    name: Setup, Build, and Push with Cloud Build
     runs-on: ubuntu-latest
 
     # Add "id-token" with the intended permissions.
     permissions:
-      contents: 'read'
-      id-token: 'write'
+      contents: read
+      id-token: write
 
     steps:
+    # checkout MUST come before auth
     - name: Checkout
+      id: Checkout
       uses: actions/checkout@v3
 
     # Configure Workload Identity Federation and generate an access token.
-    - id: 'auth'
-      name: 'Authenticate to Google Cloud'
-      uses: 'google-github-actions/auth@v1'
+    - name: Authenticate to Google Cloud
+      id: auth
+      uses: google-github-actions/auth@v0
       with:
-        workload_identity_provider: 'projects/803140796435/locations/global/workloadIdentityPools/github-identity-pool/providers/github-identity-provider'
-        service_account: '${{ secrets.RUN_SA_EMAIL }}'
+        workload_identity_provider: projects/803140796435/locations/global/workloadIdentityPools/github-identity-pool/providers/github-identity-provider
+        service_account: cloud-builder@slo-generator-demo.iam.gserviceaccount.com
 
-    # Setup gcloud CLI
-    - name: Set up Cloud SDK
+    - name: Set up Google Cloud CLI
       uses: google-github-actions/setup-gcloud@v1
     
-    # Use gcloud CLI
-    - name: Use gcloud CLI
-      run: gcloud info; gcloud auth list
+    - name: Confirm we are indeed authenticated
+      run: gcloud auth list
 
-    # Build and push image to Google Container Registry
-    - name: Build
+    - name: Build image and push to Artifact Registry
       run: |-
         gcloud builds submit \
           --quiet \
-          --tag "europe-west9-docker.pkg.dev/$PROJECT_ID/docker/$IMAGE_NAME:$GITHUB_SHA"
+          --tag "europe-west9-docker.pkg.dev/slo-generator-demo/docker/code-oss-for-slo-generator:$GITHUB_SHA"
