@@ -37,6 +37,7 @@ jobs:
 
     - name: Build image and push to Artifact Registry
       run: |-
+        gcloud auth list; \
         gcloud builds submit \
           --quiet \
           --tag "europe-west9-docker.pkg.dev/slo-generator-demo/docker/code-oss-for-slo-generator:$GITHUB_SHA"
