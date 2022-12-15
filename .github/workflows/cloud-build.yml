@@ -5,6 +5,7 @@ on:
     branches:
     - main
 
+# TODO Convert some (all?) variables to secrets so they do not show up in logs?
 env:
   PROJECT_ID: slo-generator-demo
   REGION: europe-west9
