@@ -31,7 +31,7 @@ jobs:
       id: auth
       uses: google-github-actions/auth@v1
       with:
-        workload_identity_provider: projects/803140796435/locations/global/workloadIdentityPools/github-identity-pool/providers/github-identity-provider
+        workload_identity_provider: projects/803140796435/locations/global/workloadIdentityPools/my-github-identity-pool/providers/my-github-identity-provider 
         service_account: cloud-builder@slo-generator-demo.iam.gserviceaccount.com
         token_format: access_token
         create_credentials_file: true
