@@ -9,6 +9,8 @@ env:
   PROJECT_ID: slo-generator-demo
   REGION: europe-west9
   IMAGE_NAME: code-oss-for-slo-generator
+  WORKLOAD_IDENTITY_PROVIDER: projects/803140796435/locations/global/workloadIdentityPools/my-github-identity-pool/providers/my-github-identity-provider
+  SERVICE_ACCOUNT_NAME: cloud-builder
 
 jobs:
   cloud-build:
@@ -31,8 +33,8 @@ jobs:
       id: auth
       uses: google-github-actions/auth@v1
       with:
-        workload_identity_provider: projects/803140796435/locations/global/workloadIdentityPools/my-github-identity-pool/providers/my-github-identity-provider 
-        service_account: cloud-builder@slo-generator-demo.iam.gserviceaccount.com
+        workload_identity_provider: S{WORKLOAD_IDENTITY_PROVIDER}
+        service_account: ${SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
         token_format: access_token
         create_credentials_file: true
         access_token_lifetime: '100s'
