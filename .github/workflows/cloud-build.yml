@@ -32,7 +32,7 @@ jobs:
       uses: google-github-actions/auth@v1
       with:
         workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
-        service_account: cloud-builder@${PROJECT_ID}.iam.gserviceaccount.com
+        service_account: cloud-builder@slo-generator-demo.iam.gserviceaccount.com
         token_format: access_token
         create_credentials_file: true
         access_token_lifetime: '100s'
