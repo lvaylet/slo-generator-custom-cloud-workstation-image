@@ -29,6 +29,9 @@ RUN apt update && apt install -y \
 RUN echo "en_US.UTF-8 UTF-8" | tee /etc/locale.gen
 RUN locale-gen
 
+# Install Starship shell prompt
+RUN curl -fsSL https://starship.rs/install.sh | sh -s -- -y
+
 # Customize user configuration
 # IMPORTANT: The scripts must be executable. Otherwise, please run `chmod +x <script>.sh`.
 # References:
