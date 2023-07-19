@@ -14,6 +14,9 @@ FROM us-central1-docker.pkg.dev/cloud-workstations-images/predefined/code-oss:la
 # References:
 # - https://cloud.google.com/workstations/docs/customize-container-images
 
+# TODO
+# - Pin the version of the base image for deterministic and reproducible builds
+
 # Add static assets, for example packages.
 # References:
 # - https://techoverflow.net/2021/01/13/how-to-use-apt-install-correctly-in-your-dockerfile/
