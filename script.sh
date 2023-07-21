@@ -13,11 +13,15 @@ echo "HOME=$HOME"
 EOF
 
 # Install and configure Pyenv (if not already installed).
-command -v pyenv >/dev/null || curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
-command -v pyenv >/dev/null || cat >> ~/.bashrc << EOF
+if ! command -v pyenv &> /dev/null
+then
+    echo "pyenv could not be found"
+    curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+    cat >> ~/.profile << EOF
 
 # Pyenv
 export PYENV_ROOT="\$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="\$PYENV_ROOT/bin:\$PATH"
 eval "\$(pyenv init -)"
 EOF
+fi

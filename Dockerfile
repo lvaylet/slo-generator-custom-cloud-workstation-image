@@ -1,4 +1,4 @@
-FROM us-central1-docker.pkg.dev/cloud-workstations-images/predefined/code-oss:latest
+FROM us-central1-docker.pkg.dev/cloud-workstations-images/predefined/code-oss@sha256:26c1f8bab9ad2cd8b5153be39eac4b2ca53758cf60df819c2b156f91354a3b3f
 # Usage:
 #   Build with:
 #     docker build . -t code-oss-for-slo-generator
@@ -14,17 +14,13 @@ FROM us-central1-docker.pkg.dev/cloud-workstations-images/predefined/code-oss:la
 # References:
 # - https://cloud.google.com/workstations/docs/customize-container-images
 
-# TODO
-# - Pin the version of the base image for deterministic and reproducible builds
-
 # Add static assets, for example packages.
 # References:
 # - https://techoverflow.net/2021/01/13/how-to-use-apt-install-correctly-in-your-dockerfile/
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update && apt install -y \
-  make build-essential wget curl llvm xz-utils tk-dev \
-  libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev libncursesw5-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
-  vim \
+  make build-essential wget curl \
+  vim nano \
   locales \
   && rm -rf /var/lib/apt/lists/*
 
@@ -36,9 +32,4 @@ RUN locale-gen
 RUN curl -fsSL https://starship.rs/install.sh | sh -s -- -y
 
 # Customize user configuration
-# IMPORTANT: The scripts must be executable. Otherwise, please run `chmod +x <script>.sh`.
-# References:
-# - https://cloud.google.com/workstations/docs/customize-container-images#cloud-workstations-base-image-structure
-# - https://cloud.google.com/workstations/docs/customize-container-images#container_image_with_user_customization
-COPY 011_customize-user.sh /etc/workstation-startup.d/
-COPY script.sh /tmp/
+COPY script.sh /etc/profile.d/10-customize-user-configuration.sh
