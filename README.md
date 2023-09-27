@@ -42,4 +42,4 @@ slo-generator
 
 ## TODO
 
-- Push to Artifact Registry instead of Container Registry
+[X] Push to Artifact Registry instead of Container Registry
