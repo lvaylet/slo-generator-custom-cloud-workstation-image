@@ -18,11 +18,16 @@ FROM us-central1-docker.pkg.dev/cloud-workstations-images/predefined/code-oss@sh
 # References:
 # - https://techoverflow.net/2021/01/13/how-to-use-apt-install-correctly-in-your-dockerfile/
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt update && apt install -y \
+RUN apt-get update && apt-get install -y \
   make build-essential wget curl \
   vim nano \
   locales \
   && rm -rf /var/lib/apt/lists/*
+
+# Install trivy
+ENV TRIVY_VERSION=0.45.1
+RUN wget "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_Linux-64bit.deb" && \
+  dpkg -i "trivy_${TRIVY_VERSION}_Linux-64bit.deb"
 
 # Configure locale to eliminate warnings on `sudo apt install`, `pyenv` and probably a lot more.
 RUN echo "en_US.UTF-8 UTF-8" | tee /etc/locale.gen
