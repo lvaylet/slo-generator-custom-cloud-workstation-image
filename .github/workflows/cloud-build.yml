@@ -36,30 +36,13 @@ jobs:
       with:
         workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
         service_account: ${{ env.SERVICE_ACCOUNT_NAME }}@${{ env.PROJECT_ID }}.iam.gserviceaccount.com
-        token_format: access_token
-        create_credentials_file: true
-        access_token_lifetime: '100s'
-    
-    # Alternative option - authentication via credentials json.
-#    - name: Authenticate to Google Cloud
-#      id: auth
-#      uses: google-github-actions/auth@v0
-#      with:
-#        credentials_json: ${{ secrets.RUN_SA_KEY }}
 
     - name: Set up Google Cloud CLI
       uses: google-github-actions/setup-gcloud@v2
     
-    # Only when `create_credentials_file` is `true`.
-    - name: Authenticate using credentials file
-      run: gcloud auth login --cred-file ${{ steps.auth.outputs.credentials_file_path }}
-
-    # The actual name of the SA might be redacted as *** as GitHub recognizes it as a secret.
-    - name: Confirm we are indeed authenticated
-      run: gcloud auth list
-
     - name: Build image and push to Artifact Registry
       run: |-
         gcloud builds submit \
           --quiet \
-          --tag "${REGION}-docker.pkg.dev/${PROJECT_ID}/docker/${IMAGE_NAME}:${GITHUB_SHA}"
+          --tag "${REGION}-docker.pkg.dev/${PROJECT_ID}/docker/${IMAGE_NAME}:${GITHUB_SHA}" \
+          --tag "${REGION}-docker.pkg.dev/${PROJECT_ID}/docker/${IMAGE_NAME}:latest"
