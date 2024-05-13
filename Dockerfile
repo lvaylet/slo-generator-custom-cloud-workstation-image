@@ -19,7 +19,8 @@ FROM us-central1-docker.pkg.dev/cloud-workstations-images/predefined/code-oss@sh
 # - https://techoverflow.net/2021/01/13/how-to-use-apt-install-correctly-in-your-dockerfile/
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y \
-  make build-essential wget curl \
+  make wget curl \
+  build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev curl libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
   vim nano \
   locales \
   && rm -rf /var/lib/apt/lists/*
