@@ -1,4 +1,4 @@
-FROM us-central1-docker.pkg.dev/cloud-workstations-images/predefined/code-oss@sha256:67481a29a72e6efbd37cbce8fa8387aaff641b91eab663d787247e1a93fd34d7
+FROM us-central1-docker.pkg.dev/cloud-workstations-images/predefined/code-oss@sha256:64a761bd763a604b0885ffcc07e5e59bc231d5a3aa816f70240d4b8500fc4f92
 # Usage:
 #   Build with:
 #     docker build . -t code-oss-for-slo-generator
